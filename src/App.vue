@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
-    <input type="text" name="" id="display" disabled :value="x">
-    <CalcButton v-for="digit in digits" :buttonValue="digit" :key="digit" v-model="y"/>
+  <div id="app" class='calc-container'>
+    <input type="text" name="" id="display" disabled :value="x"><br>
+    <CalcButton v-for="digit in digits" :buttonValue="digit" :key="digit" v-model="y" :value="digit"/>
   </div>
 </template>
 
@@ -17,7 +17,10 @@ export default {
   },
   data() {
     return {
-      digits:[0,1,2,3,4,5,6,7,8,9,'+','-','=','*','/','.','C'],
+      digits:[7,8,9,'/','C',
+              4,5,6,'*','=',
+              1,2,3,'-',
+              0,'.','+'],
       a : 0,
       b : 0,
       calculationSign :'',
@@ -37,7 +40,27 @@ export default {
     },
     equal(){
       this.b = parseFloat(this.x);
-      this.outcome = this.a + this.b;
+      switch(this.calculationSign){
+        case "+":{
+          this.plus();
+          break;
+        }
+        case "-":{
+          this.minus();
+          break;
+        }
+        case "*":{
+          this.multiply();
+          break;
+        }
+        case "/":{
+          this.devine();
+          break;
+        }
+        default:{
+          this.outcome = parseFloat(this.a);
+        }
+      }
       this.x = this.outcome.toString();
     },
     clearData(){
@@ -46,6 +69,18 @@ export default {
       this.x = "";
       this.y = "";
       this.outcome = "";
+    },
+    plus(){
+      this.outcome = this.a + this.b;
+    },
+    minus(){
+      this.outcome = this.a - this.b;
+    },
+    multiply(){
+      this.outcome = this.a * this.b;
+    },
+    devine(){
+      this.outcome = this.a / this.b;
     }
   },
   watch:{
@@ -92,9 +127,6 @@ export default {
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
