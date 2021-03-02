@@ -1,6 +1,26 @@
 <template>
   <div id="app" class='calc-container'>
-    <Calc></Calc>
+
+    <a href="#" @click.prevent="comp = 'home'">Title</a>
+    <a href="#" @click.prevent="comp = 'Calc'">Calc</a>
+
+    <template v-if="comp === 'Calc'">
+      <transition mode="out-in" name="animate__animated calc-transition" enter-active-class="animate__animated animate__bounce" leave-active-class="animate__animated animate__flipOutX" appear="true">
+
+        <div>
+           <Calc></Calc>
+        </div>
+
+      </transition>
+
+    </template>
+
+    <template v-else>
+      <transition mode="out-in" name="animate__animated calc-transition" enter-active-class="animate__animated animate__bounce" leave-active-class="animate__animated animate__flipOutX" appear="true">
+        <h1>Kalkulator</h1>
+      </transition>
+    </template>
+
   </div>
 </template>
 
@@ -13,7 +33,12 @@ export default {
   name: 'App',
   components: {
     Calc
-  }
+  },
+  data() {
+    return {
+      comp:'Calc'
+    }
+  },
 }
 </script>
 
